@@ -1,33 +1,53 @@
 const TuyAPI = require('tuyapi');
+const retry = require('retry');
 let status = false;
 
-function generateTuyaClass(id, key){
+function generateTuyaClass(id, key, cb){
 
   let device =  new TuyAPI({
     id: id,
     key: key
-});
+  });
 
-  // Find device on network
+  var operation = retry.operation({
+    retries: 5,
+    factor: 3,
+    minTimeout: 1 * 1000,
+    maxTimeout: 60 * 1000,
+    randomize: true,
+  });
+
+  operation.attempt(() => {
+
+   // Find device on network
       device.find().then(() => {
       // Connect to device
       device.connect();
   });
 
-  // Add event listeners
-  device.on('connected', () => {
-  console.log('Connected to device!');
-  });
+    // Add event listeners
+    device.on('connected', () => {
+      if(operation.retry()){
+        console.log('stocazzo');
+        return;
+      }
+      console.log('Connected to device!');
+    });
 
-  device.on('disconnected', () => {
-  console.log('Disconnected from device.');
-  });
+    device.on('disconnected', () => {
+    console.log('Disconnected from device.');
+    });
 
-  device.on('error', error => {
-  console.log('Error!', error);
+    device.on('error', error => {
+      if(operation.retry()){
+        console.log('stocazzo2');
+        return;
+      }
+    });
   });
 
   return device;
+
 }
 
 function trigger(id, key, use){
@@ -107,6 +127,7 @@ var app = express();
 
 app.get('/', function (req, res) {
     if("multiple" in req.query){
+      console.log(req.query)
       triggerMultiple(req.query.id, req.query.key, req.query.use, req.query.subdevice);  
     }else{
       trigger(req.query.id, req.query.key, req.query.use);
