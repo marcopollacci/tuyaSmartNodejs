@@ -28,7 +28,6 @@ function generateTuyaClass(id, key, cb){
     // Add event listeners
     device.on('connected', () => {
       if(operation.retry()){
-        console.log('stocazzo');
         return;
       }
       console.log('Connected to device!');
@@ -40,7 +39,6 @@ function generateTuyaClass(id, key, cb){
 
     device.on('error', error => {
       if(operation.retry()){
-        console.log('stocazzo2');
         return;
       }
     });
