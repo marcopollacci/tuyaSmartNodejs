@@ -65,11 +65,9 @@ function trigger(id, key, use){
         let stato_attuale = data.dps['1'];
     
         let cambio_stato = new Promise((resolve) => {
-            if(stato_attuale !== checkuse){
                 device.set({
-                  set: !(data.dps['1'])
+                  set: checkuse
                 });
-            }
     
             resolve('ok!');
         })
@@ -99,14 +97,12 @@ function triggerMultiple(id, key, use, subdevice) {
         let stato_attuale = data.dps[subdevice];
     
         let cambio_stato = new Promise((resolve) => {
-            if(stato_attuale !== checkuse){
                 device.set({
                   multiple: true,
                   data: {
-                    [subdevice]: !(data.dps[subdevice])
+                    [subdevice]: checkuse
                   }
                 });
-            }
     
             resolve('ok!');
         })
