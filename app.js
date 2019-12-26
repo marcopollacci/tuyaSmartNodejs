@@ -38,6 +38,7 @@ function generateTuyaClass(id, key, cb){
     });
 
     device.on('error', error => {
+      console.log(error);
       if(operation.retry()){
         return;
       }
@@ -60,9 +61,9 @@ function trigger(id, key, use){
   
     device.on('data', data => {
       if(typeof data !== undefined){
-        console.log(`Boolean status of default property: ${data.dps['1']}.`);
+      //  console.log(`Boolean status of default property: ${data.dps['1']}.`);
       
-        let stato_attuale = data.dps['1'];
+       // let stato_attuale = data.dps['1'];
     
         let cambio_stato = new Promise((resolve) => {
                 device.set({
@@ -90,11 +91,10 @@ function triggerMultiple(id, key, use, subdevice) {
         checkuse = true;
     }
     device.on('data', data => {
-    console.log(data);
       if(typeof data !== undefined){
-        console.log(`Boolean status of default property: ${data.dps[subdevice]}.`);
+      //  console.log(`Boolean status of default property: ${data.dps[subdevice]}.`);
       
-        let stato_attuale = data.dps[subdevice];
+      //  let stato_attuale = data.dps[subdevice];
     
         let cambio_stato = new Promise((resolve) => {
                 device.set({
@@ -121,7 +121,7 @@ var app = express();
 
 app.get('/', function (req, res) {
     if("multiple" in req.query){
-      console.log(req.query)
+      //console.log(req.query);
       triggerMultiple(req.query.id, req.query.key, req.query.use, req.query.subdevice);  
     }else{
       trigger(req.query.id, req.query.key, req.query.use);
