@@ -1,6 +1,5 @@
 const TuyAPI = require('tuyapi');
 const retry = require('retry');
-let status = false;
 
 function generateTuyaClass(id, key, cb){
 
@@ -10,11 +9,7 @@ function generateTuyaClass(id, key, cb){
   });
 
   var operation = retry.operation({
-    retries: 5,
-    factor: 3,
-    minTimeout: 1 * 1000,
-    maxTimeout: 60 * 1000,
-    randomize: true,
+    retries: 5
   });
 
   operation.attempt(() => {
@@ -27,9 +22,6 @@ function generateTuyaClass(id, key, cb){
 
     // Add event listeners
     device.on('connected', () => {
-      if(operation.retry()){
-        return;
-      }
       console.log('Connected to device!');
     });
 
@@ -39,7 +31,7 @@ function generateTuyaClass(id, key, cb){
 
     device.on('error', error => {
       console.log(error);
-      if(operation.retry()){
+      if(operation.retry(error)){
         return;
       }
     });
@@ -61,9 +53,6 @@ function trigger(id, key, use){
   
     device.on('data', data => {
       if(typeof data !== undefined){
-      //  console.log(`Boolean status of default property: ${data.dps['1']}.`);
-      
-       // let stato_attuale = data.dps['1'];
     
         let cambio_stato = new Promise((resolve) => {
                 device.set({
