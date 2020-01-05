@@ -15,10 +15,18 @@ function generateTuyaClass(id, key){
   operation.attempt(() => { //retry if error socket connect
 
    // Find device on network
-      device.find().then(() => {
+    device.find()
+    .then(() => {
       // Connect to device
       device.connect();
-  });
+    })
+    .catch(reason =>{
+      console.log(reason);
+      if(operation.retry(reason)){
+        return;
+      }
+    })
+    ;
 
     // Add event listeners
     device.on('connected', () => {
