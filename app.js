@@ -1,7 +1,7 @@
 const TuyAPI = require('tuyapi');
 const retry = require('retry');
 
-function generateTuyaClass(id, key, cb){
+function generateTuyaClass(id, key){
 
   let device =  new TuyAPI({
     id: id,
@@ -12,7 +12,7 @@ function generateTuyaClass(id, key, cb){
     retries: 5
   });
 
-  operation.attempt(() => {
+  operation.attempt(() => { //retry if error socket connect
 
    // Find device on network
       device.find().then(() => {
@@ -55,12 +55,11 @@ function trigger(id, key, use){
       if(typeof data !== undefined){
     
         let cambio_stato = new Promise((resolve) => {
-                device.set({
-                  set: checkuse
-                });
-    
-            resolve('ok!');
-        })
+          device.set({
+            set: checkuse
+          });
+          resolve('ok!');
+        });
     
         cambio_stato.then((resolve) => {
             device.disconnect();
@@ -81,17 +80,14 @@ function triggerMultiple(id, key, use, subdevice) {
     }
     device.on('data', data => {
       if(typeof data !== undefined){
-      //  console.log(`Boolean status of default property: ${data.dps[subdevice]}.`);
-      
-      //  let stato_attuale = data.dps[subdevice];
-    
+   
         let cambio_stato = new Promise((resolve) => {
-                device.set({
-                  multiple: true,
-                  data: {
-                    [subdevice]: checkuse
-                  }
-                });
+            device.set({
+              multiple: true,
+              data: {
+                [subdevice]: checkuse
+              }
+            });
     
             resolve('ok!');
         })
@@ -110,7 +106,6 @@ var app = express();
 
 app.get('/', function (req, res) {
     if("multiple" in req.query){
-      //console.log(req.query);
       triggerMultiple(req.query.id, req.query.key, req.query.use, req.query.subdevice);  
     }else{
       trigger(req.query.id, req.query.key, req.query.use);
