@@ -18,7 +18,12 @@ function generateTuyaClass(id, key){
     device.find()
     .then(() => {
       // Connect to device
-      device.connect();
+      device.connect().catch(reason =>{
+        console.log(reason);
+        if(operation.retry(reason)){
+          return;
+        }
+      });
     })
     .catch(reason =>{
       console.log(reason);
