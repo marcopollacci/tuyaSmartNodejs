@@ -164,8 +164,6 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
           '21': (mode) ? mode : data.dps['21'], // modalità  funzionamento
           '22': (dimmer) ? (Number(dimmer) * 10) : data.dps['22'], // dimmer 
           '23': (temperature) ? temperature : data.dps['23'], // temperatura colore ( 0 = calda)
-          // '24': (colour) ? colour.toString() : data.dps['24'],
-          // '24': (colour) ? `${conversion.RGBtoHSV(pippo[0], pippo[1], pippo[2])}03e803e8` : data.dps['24'],
           '24': (colour) ? `${ await conversion.RGBtoHSV(colour)}03e803e8` : data.dps['24'],
         };
 
