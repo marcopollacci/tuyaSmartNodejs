@@ -7,7 +7,6 @@ module.exports = {
 
   },
   makeCalc: async function(r, g, b) {
-    console.log('r', r);
     var max = Math.max(r, g, b), min = Math.min(r, g, b),
         d = max - min,
         h,
@@ -42,7 +41,6 @@ module.exports = {
     });
   },
   DecimalHexTwosComplement: async function(decimal) {
-      console.log('decimal', decimal);
       var size = 4;
     
       if (decimal >= 0) {
@@ -51,7 +49,6 @@ module.exports = {
         while ((hexadecimal.length % size) != 0) {
           hexadecimal = "" + 0 + hexadecimal;
         }
-        console.log('hexadecimal', hexadecimal)
         return hexadecimal;
       } else {
         var hexadecimal = Math.abs(decimal).toString(16);
