@@ -155,9 +155,6 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
   }
 
   device.on('data', async(data) => {
-    console.log('colo', colour);
-    console.log('data', data);
-    console.log('dimmer', dimmer)
     if(typeof data !== undefined){
         const dataSet = {
           '20': checkuse,
