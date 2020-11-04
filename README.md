@@ -1,5 +1,8 @@
 # Async Script for NodeJS Server based on Tuyapi ( https://codetheweb.github.io/tuyapi/index.html )
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/marcopollacci/tuyaSmartNodejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/marcopollacci/tuyaSmartNodejs/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/marcopollacci/tuyaSmartNodejs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/marcopollacci/tuyaSmartNodejs/context:javascript)
+
 ## Install
 Just clone repository, run npm install
 

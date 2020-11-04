@@ -66,8 +66,7 @@ function trigger(id, key, use){
     }
   
     device.on('data', data => {
-      console.log('data', data);
-      if(typeof data !== undefined){
+      if(typeof data !== "undefined"){
     
         let cambio_stato = new Promise((resolve) => {
           device.set({
@@ -94,8 +93,8 @@ function triggerMultiple(id, key, use, subdevice) {
         checkuse = true;
     }
     device.on('data', data => {
-      console.log('data', data);
       if(typeof data !== undefined){
+   
         let cambio_stato = new Promise((resolve) => {
             device.set({
               multiple: true,
