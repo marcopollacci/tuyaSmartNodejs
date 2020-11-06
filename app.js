@@ -156,17 +156,29 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
 
   device.on('data', async(data) => {
     if(typeof data !== 'undefined'){
-        const dataSet = {
-          '20': checkuse,
-          '21': (mode) ? mode : data.dps['21'], // modalità  funzionamento
-          '22': (dimmer) ? (Number(dimmer) * 10) : data.dps['22'], // dimmer 
-          '23': (temperature) ? temperature : data.dps['23'], // temperatura colore ( 0 = calda)
-          '24': (colour) ? `${ await conversion.RGBtoHSV(colour)}03e803e8` : data.dps['24'],
-        };
+      const dataSet = {
+        '20': checkuse
+      };
 
-        if (scene) {
+      if (mode) {
+        dataSet['21'] = mode;
+      }
+
+      if (dimmer) {
+        dataSet['22'] = (Number(dimmer) * 10);
+      }
+
+      if (temperature) {
+        dataSet['23'] = temperature;
+      }
+
+      if (colour) {
+        dataSet['24'] = `${ await conversion.RGBtoHSV(colour)}03e803e8`;
+      }
+
+      if (scene) {
           dataSet['25'] = scene;
-        }
+      }
 
       let cambio_stato = new Promise((resolve) => {
         device.set({
