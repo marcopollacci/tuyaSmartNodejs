@@ -58,7 +58,6 @@ function generateTuyaClass(id, key){
 function trigger(id, key, use){
 
     const device = generateTuyaClass(id, key);
-    console.log('device', device)
     let checkuse = false;
 
     if(use === 'accendi'){
@@ -75,7 +74,7 @@ function trigger(id, key, use){
           resolve('ok!');
         });
     
-        cambio_stato.then((resolve) => {
+        cambio_stato.then(() => {
             device.disconnect();
         })
       }
@@ -106,7 +105,7 @@ function triggerMultiple(id, key, use, subdevice) {
             resolve('ok!');
         })
     
-        cambio_stato.then((resolve) => {
+        cambio_stato.then(() => {
             device.disconnect();
         })
       }
@@ -156,6 +155,7 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
 
   device.on('data', async(data) => {
     if(typeof data !== 'undefined'){
+
       const dataSet = {
         '20': checkuse
       };
@@ -184,11 +184,11 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
         device.set({
           multiple: true,
           data: dataSet
-        });
-        resolve('ok!');
+        }).then(() => resolve('ok!'))
+        .catch(error => console.log(error));
       });
   
-      cambio_stato.then((resolve) => {
+      cambio_stato.then(() => {
           device.disconnect();
       })
     }
