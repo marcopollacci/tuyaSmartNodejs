@@ -204,9 +204,9 @@ var app = express();
 app.get('/', function (req, res) {
     if("multiple" in req.query){
       triggerMultiple(req.query.id, req.query.key, req.query.use, req.query.subdevice);  
-    } if ("nooie" in req.query) {
+    } else if ("nooie" in req.query) {
       triggerNooie(req.query.id, req.query.key, req.query.use, req.query.temperature, req.query.mode, req.query.dimmer, req.query.colour, req.query.scene);
-    }else{
+    } else{
       trigger(req.query.id, req.query.key, req.query.use);
     }
     res.send('Hello World!');
