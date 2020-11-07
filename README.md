@@ -16,7 +16,7 @@ Just clone repository, run npm install
 - http://127.0.0.1:8081?id=<id_device>&key=<key_device>&use=accendi&multiple=1&subdevice=<id_switch> (to turn on)
 - http://127.0.0.1:8081/?id=<id_device>&key=<key_device>&use=spegni&multiple=1&subdevice=<id_switch> (to turn off)
 
-### Call to lamp device with color and/or dimmer
+### Call to lamp device with color and/or dimmer (only for nooie for now)
 - http://localhost:8081/?id=<id_device>&key=<key_device>&use=accendi&nooie=1&mode=colour&colour=${color.r},${color.g},${color.b}  (pass the rgb value with comma like `255,0,0`)
 - http://localhost:8081/?id=<id_device>&key=<key_device>&use=accendi&nooie=1&dimmer=${intensity.percent}
 
