@@ -169,7 +169,7 @@ function triggerNooie(id, key, use, temperature = '', mode = '', dimmer = '', co
       }
 
       if (temperature) {
-        dataSet['23'] = temperature;
+        dataSet['23'] = Number(temperature);
       }
 
       if (colour) {
